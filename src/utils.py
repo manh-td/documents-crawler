@@ -7,6 +7,7 @@ from .config import (
 )
 from bs4 import BeautifulSoup
 from markdownify import MarkdownConverter
+import json
 
 log_file_path = os.path.join(LOGS_DIR, 'logs.log')
 logging.basicConfig(
@@ -52,17 +53,18 @@ def convert(html_content: str) -> str:
     logging.debug(f"Converted markdown content")
     return markdown_content
 
-def write_to_file(file_path, content):
+def write_list_of_dicts_to_jsonl(file_path, data):
     """
-    Write content to a file.
+    Write a list of dictionaries to a JSONL (JSON Lines) file.
 
-    :param file_path: Path to the file.
-    :param content: Content to write to the file.
+    :param file_path: Path to the JSONL file.
+    :param data: List of dictionaries to write.
     """
-    logging.debug(f"Writing content to file: {file_path}")
+    logging.debug(f"Writing list of dictionaries to JSONL file: {file_path}")
     try:
         with open(file_path, mode='w', encoding='utf-8') as file:
-            file.write(content)
-        logging.info(f"Content successfully written to {file_path}")
+            for item in data:
+                file.write(json.dumps(item) + '\n')
+        logging.info(f"Data successfully written to {file_path}")
     except Exception as e:
-        logging.error(f"Failed to write to file {file_path}: {e}")
+        logging.error(f"Failed to write to JSONL file {file_path}: {e}")
