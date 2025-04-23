@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    image: document-crawler-image:latest
+    container_name: document-crawler-container
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true

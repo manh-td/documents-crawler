@@ -1,0 +1,4 @@
+inputs/websites.csv
+logs/logs.log
+*cache*
+*.md
